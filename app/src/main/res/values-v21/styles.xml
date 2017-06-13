@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme.TransStatusBar" parent="AppTheme.TransStatusBar.Base">
+        <!--去除顶部的状态栏-->
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:statusBarColor">@null</item>
     </style>
 </resources>
