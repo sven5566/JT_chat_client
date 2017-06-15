@@ -102,6 +102,16 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 	}
 
 	@Override
+	public void update(Data data, ViewHolder<Data> holder) {
+		int pos=holder.getAdapterPosition();
+		if(pos>=0){
+			mDataList.remove(pos);
+			mDataList.add(pos,data);
+			notifyItemChanged(pos);
+		}
+	}
+
+	@Override
 	public void onClick(View v) {
 		ViewHolder viewHolder = (ViewHolder) v.getTag(R.id.tag_recycler_holder);
 		if(mListener!=null){
@@ -126,11 +136,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 	}
 
 
-	public interface AdapterListener<Data> {
-		void onItemClick(RecyclerAdapter.ViewHolder holder, Data data);
 
-		void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
-	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder<Data> holder, int position) {
@@ -168,6 +174,27 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 			if (callback != null) {
 				callback.update(mData, this);
 			}
+		}
+	}
+
+	public interface AdapterListener<Data> {
+		void onItemClick(RecyclerAdapter.ViewHolder holder, Data data);
+
+		void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
+	}
+
+	/**
+	 * 对回调接口进行默认实现
+	 * @param <Data>
+	 */
+	public static abstract class AdapterListenerImpl<Data> implements AdapterListener<Data>{
+
+		@Override
+		public void onItemClick(ViewHolder holder, Data data) {
+		}
+
+		@Override
+		public void onItemLongClick(ViewHolder holder, Data data) {
 		}
 	}
 }
